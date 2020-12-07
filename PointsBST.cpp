@@ -7,15 +7,15 @@ PointsBST::PointsBST()
 {
 }
 
-void PointsBST::printWord(std::string word)
+void PointsBST::printValue(int value)
 {
     int opCount;
-    BSTNode *temp = searchBST(word, opCount);
-    cout << "Word: " << temp->word << endl
+    BSTNode *temp = searchBST(value);
+    cout << "Word: " << temp->value << endl
          << "Count: " << temp->count << endl
-         << "Parent: " << temp->parent->word << endl
-         << "Left Child: " << temp->leftChild->word << endl
-         << "Right Child: " << temp->rightChild->word << endl;
+         << "Parent: " << temp->parent->value << endl
+         << "Left Child: " << temp->leftChild->value << endl
+         << "Right Child: " << temp->rightChild->value << endl;
 }
 
 void PointsBST::printInOrderBST()
@@ -34,43 +34,28 @@ int PointsBST::countBSTNodes()
         countBSTNodes(root, &count);
     }
     cout << endl
-         << "there are " << count << " nodes in the BST" << endl;
+         << "you currently have " << count << " point orbs" << endl;
     return count;
 }
 
-int PointsBST::addWordNode(std::string word)
+void PointsBST::addPointNode(int value)
 {
 
     int comparisonCount = 0;
-    // calls searchBST to check if node is already in tree
-    BSTNode *temp = searchBST(word, comparisonCount);
-    // if the node is already in the tree, increase the count for it but don't add a new node to the tree
-    if (temp != NULL && temp->word == word)
-    {
-        comparisonCount++;
-        temp->count = temp->count + 1;
-        //cout << "BST: after " << comparisonCount << " comparisons it was determined that " << word << " was already in the tree, its count has been increased to " << temp->count << endl;
-        //cout << "BST:" << comparisonCount << endl;
-        return comparisonCount;
-    }
-    // instantiate node to insert
-    BSTNode *insNode = new BSTNode(word, NULL, NULL, NULL);
+    BSTNode *insNode = new BSTNode(value, NULL, NULL, NULL);
     // if tree is empty
     if (root == NULL)
     {
         root = insNode;
-        //cout << "BST: added " << word << " after " << comparisonCount << " comparisons" << endl;
-        //cout << "BST:" << comparisonCount << endl;
-        return comparisonCount;
+        return;
     }
     BSTNode *prober = root;
     BSTNode *lagger;
     while (prober != NULL)
     {
-        comparisonCount++;
         lagger = prober;
 
-        if (word < prober->word)
+        if (value < prober->value)
         {
             prober = prober->leftChild;
         }
@@ -79,7 +64,7 @@ int PointsBST::addWordNode(std::string word)
             prober = prober->rightChild;
         }
     }
-    if (word < lagger->word)
+    if (value < lagger->value)
     {
         lagger->leftChild = insNode;
         insNode->parent = lagger;
@@ -89,12 +74,9 @@ int PointsBST::addWordNode(std::string word)
         lagger->rightChild = insNode;
         insNode->parent = lagger;
     }
-    //cout << "BST: added " << word << " after " << comparisonCount << " comparisons" << endl;
-    //cout << "BST:" << comparisonCount << endl;
-    return comparisonCount;
 }
 
-void PointsBST::findAlphaRange(std::string word1, std::string word2)
+void PointsBST::findValueRange(int value1, int value2)
 {
     if (!root)
     {
@@ -106,10 +88,10 @@ void PointsBST::findAlphaRange(std::string word1, std::string word2)
         if (temp->leftChild == NULL)
         {
             // check if temp lies between word1 and word2
-            if (temp->word <= word2 &&
-                temp->word >= word1)
+            if (temp->value <= value2 &&
+                temp->value >= value1)
             {
-                cout << temp->word << " ";
+                cout << temp->value << " ";
             }
             temp = temp->rightChild;
         }
@@ -131,9 +113,9 @@ void PointsBST::findAlphaRange(std::string word1, std::string word2)
             {
                 pre->rightChild = NULL;
                 // check if temp lies between word1 and word2
-                if (temp->word <= word2 && temp->word >= word1)
+                if (temp->value <= value2 && temp->value >= value1)
                 {
-                    cout << temp->word << " ";
+                    cout << temp->value << " ";
                 }
                 temp = temp->rightChild;
             }
@@ -147,7 +129,7 @@ void PointsBST::printBST(BSTNode *node)
     if (node != NULL)
     {
         printBST(node->leftChild);
-        cout << node->word << " ";
+        cout << node->value << " ";
         printBST(node->rightChild);
     }
 }
@@ -170,7 +152,7 @@ void PointsBST::countBSTNodes(BSTNode *node, int *c)
     }
 }
 
-BSTNode *PointsBST::searchBST(std::string word, int &opCounter)
+BSTNode *PointsBST::searchBST(int value)
 {
     if (root == NULL)
     {
@@ -178,10 +160,9 @@ BSTNode *PointsBST::searchBST(std::string word, int &opCounter)
     }
     BSTNode *finder = root;
 
-    while (finder->word != word && finder != NULL)
+    while (finder->value != value && finder != NULL)
     {
-        opCounter++;
-        if (word < finder->word)
+        if (value < finder->value)
         {
             if (finder->leftChild != NULL)
             {
@@ -192,7 +173,7 @@ BSTNode *PointsBST::searchBST(std::string word, int &opCounter)
                 return NULL;
             }
         }
-        else if (word > finder->word)
+        else if (value > finder->value)
         {
             if (finder->rightChild != NULL)
             {

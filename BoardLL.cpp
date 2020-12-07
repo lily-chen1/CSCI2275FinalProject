@@ -4,10 +4,12 @@ CSCI 2275
 */
 
 #include "BoardLL.h"
+#include "PointsBST.h"
 #include <string>
 #include <time.h>
 using namespace std;
 
+PointsBST points;
 BoardLL::BoardLL() {}
 
 void BoardLL::addTile()

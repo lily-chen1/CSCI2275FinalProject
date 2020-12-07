@@ -294,6 +294,12 @@ and I want to be at least somewhat performant.
 */
 BSTNode *PointsBST::deleteNode(BSTNode *node)
 {
+    if (node == root && node->leftChild == NULL && node->rightChild == NULL)
+    {
+        root = NULL;
+        return NULL;
+    }
+
     // node with only one chile or no child
     if (!node->leftChild)
     {

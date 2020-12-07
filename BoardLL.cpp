@@ -106,6 +106,7 @@ void BoardLL::rollTheDie()
         if (currentTile->next == NULL)
         {
             cout << "you have reached the end of the board" << endl;
+            points.findTotalPoints();
             return;
         }
         currentTile = currentTile->next;

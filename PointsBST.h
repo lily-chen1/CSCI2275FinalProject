@@ -31,6 +31,9 @@ public:
     int countBSTNodes();
     void addPointNode(int value);
     void findValueRange(int value1, int value2);
+    void deleteMinValue();
+    void deleteMaxValue();
+    bool isEmpty();
 
 protected:
 private:

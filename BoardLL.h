@@ -8,10 +8,10 @@ using namespace std;
 struct tileNode
 {
     string tileTypes[4] = {
-        "discard the lowest value point orb you have",
-        "discard the highest value point orb you have",
-        "add a point orb of a random value",
-        "discard all point orbs you have that are in a random range of values"};
+        "discard the lowest value point node you have",
+        "discard the highest value point node you have",
+        "add a point node of a random value",
+        "discard all point nodes you have that are in a random range of values"};
     string type;
     int value = 0;
     int value2 = 0;

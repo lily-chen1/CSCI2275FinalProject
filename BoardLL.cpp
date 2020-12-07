@@ -6,7 +6,6 @@ CSCI 2275
 #include "BoardLL.h"
 #include "PointsBST.h"
 #include <string>
-#include <time.h>
 using namespace std;
 
 PointsBST points;
@@ -56,7 +55,6 @@ void BoardLL::rollTheDie()
         currentTile = firstTile;
     }
     int randomNumber;
-    srand(time(NULL));
     randomNumber = rand() % 6 + 1;
     cout << "You rolled a " << randomNumber << endl;
     for (int i = 0; i < randomNumber; i++)
@@ -69,4 +67,18 @@ void BoardLL::rollTheDie()
         currentTile = currentTile->next;
     }
     cout << "You landed on a tile bearing the inscription: " << currentTile->type << endl;
+    if (currentTile->type == "discard the lowest value point node you have")
+    {
+        points.deleteMinValue();
+    }
+    else if (currentTile->type == "discard the highest value point node you have")
+    {
+        points.deleteMaxValue();
+    }
+    else if (currentTile->type == "add a point node of a random value")
+    {
+        srand(time(NULL));
+        randomNumber = rand() % 100 + 1;
+        points.addPointNode(randomNumber);
+    }
 }

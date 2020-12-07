@@ -40,12 +40,12 @@ int PointsBST::countBSTNodes()
 
 void PointsBST::addPointNode(int value)
 {
-
     int comparisonCount = 0;
     BSTNode *insNode = new BSTNode(value, NULL, NULL, NULL);
     // if tree is empty
     if (root == NULL)
     {
+        cout << "node with a value of " << value << " was added to the BST";
         root = insNode;
         return;
     }
@@ -74,6 +74,7 @@ void PointsBST::addPointNode(int value)
         lagger->rightChild = insNode;
         insNode->parent = lagger;
     }
+    cout << "node with a value of " << value << " was added to the BST";
 }
 
 void PointsBST::findValueRange(int value1, int value2)
@@ -186,4 +187,48 @@ BSTNode *PointsBST::searchBST(int value)
         }
     }
     return finder;
+}
+
+void PointsBST::deleteMinValue()
+{
+    struct BSTNode *current = root;
+    if (isEmpty())
+    {
+        cout << "your points BST is empty, so no nodes were discarded" << endl;
+        return;
+    }
+    while (current->leftChild != NULL)
+    {
+        current = current->leftChild;
+    }
+    cout << "the minimum value node in the points BST with a value of " << current->value << " was discarded" << endl;
+    delete current;
+}
+
+void PointsBST::deleteMaxValue()
+{
+    struct BSTNode *current = root;
+    if (isEmpty())
+    {
+        cout << "your points BST is empty, so no nodes were discarded" << endl;
+        return;
+    }
+    while (current->rightChild != NULL)
+    {
+        current = current->rightChild;
+    }
+    cout << "the maximum value node in the points BST with a value of " << current->value << " was discarded" << endl;
+    delete current;
+}
+
+bool PointsBST::isEmpty()
+{
+    if (root == NULL)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

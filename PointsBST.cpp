@@ -20,22 +20,26 @@ void PointsBST::printValue(int value)
 
 void PointsBST::printInOrderBST()
 {
+    if (root == NULL)
+    {
+        cout << "your points BST is currently empty" << endl;
+        return;
+    }
+
     printBST(root);
     cout << endl;
     return;
 }
 
-int PointsBST::countBSTNodes()
+void PointsBST::findTotalPoints()
 {
     int count = 0;
     if (root != NULL)
     {
-        count++;
-        countBSTNodes(root, &count);
+        findTotalPointsHelper(root, &count);
     }
     cout << endl
-         << "you currently have " << count << " point orbs" << endl;
-    return count;
+         << "you currently have a total of " << count << " points" << endl;
 }
 
 void PointsBST::addPointNode(int value)
@@ -45,7 +49,7 @@ void PointsBST::addPointNode(int value)
     // if tree is empty
     if (root == NULL)
     {
-        cout << "node with a value of " << value << " was added to the BST";
+        cout << "node with a value of " << value << " was added to the BST" << endl;
         root = insNode;
         return;
     }
@@ -74,7 +78,7 @@ void PointsBST::addPointNode(int value)
         lagger->rightChild = insNode;
         insNode->parent = lagger;
     }
-    cout << "node with a value of " << value << " was added to the BST";
+    cout << "node with a value of " << value << " was added to the BST" << endl;
 }
 
 void PointsBST::findValueRange(int value1, int value2)
@@ -135,21 +139,16 @@ void PointsBST::printBST(BSTNode *node)
     }
 }
 
-void PointsBST::printPreOrderBST(BSTNode *node)
+void PointsBST::findTotalPointsHelper(BSTNode *node, int *c)
 {
-}
-
-void PointsBST::countBSTNodes(BSTNode *node, int *c)
-{
+    *c = *c + node->value;
     if (node->leftChild != NULL)
     {
-        *c = *c + 1;
-        countBSTNodes(node->leftChild, c);
+        findTotalPointsHelper(node->leftChild, c);
     }
     if (node->rightChild != NULL)
     {
-        *c = *c + 1;
-        countBSTNodes(node->rightChild, c);
+        findTotalPointsHelper(node->rightChild, c);
     }
 }
 
@@ -202,7 +201,28 @@ void PointsBST::deleteMinValue()
         current = current->leftChild;
     }
     cout << "the minimum value node in the points BST with a value of " << current->value << " was discarded" << endl;
-
+    if (current->rightChild != NULL && current->parent != NULL)
+    {
+        current->rightChild->parent = current->parent;
+        current->parent->leftChild = current->rightChild;
+    }
+    else if (current->parent != NULL)
+    {
+        current->parent->leftChild = NULL;
+    }
+    else if (current = root)
+    {
+        if (current->rightChild != NULL)
+        {
+            current->rightChild->parent = NULL;
+            root = current->rightChild;
+        }
+        else
+        {
+            //BST is now empty
+            root = NULL;
+        }
+    }
     delete current;
 }
 
@@ -219,6 +239,28 @@ void PointsBST::deleteMaxValue()
         current = current->rightChild;
     }
     cout << "the maximum value node in the points BST with a value of " << current->value << " was discarded" << endl;
+    if (current->leftChild != NULL && current->parent != NULL)
+    {
+        current->leftChild->parent = current->parent;
+        current->parent->rightChild = current->leftChild;
+    }
+    else if (current->parent != NULL)
+    {
+        current->parent->rightChild = NULL;
+    }
+    else if (current = root)
+    {
+        if (current->leftChild != NULL)
+        {
+            current->leftChild->parent = NULL;
+            root = current->leftChild;
+        }
+        else
+        {
+            //BST is now empty
+            root = NULL;
+        }
+    }
     delete current;
 }
 
@@ -232,4 +274,75 @@ bool PointsBST::isEmpty()
     {
         return false;
     }
+}
+
+// A Utility function to find leftMost node
+BSTNode *PointsBST::leftMost(BSTNode *root)
+{
+    if (!root)
+        return NULL;
+    while (root->leftChild)
+        root = root->leftChild;
+    return root;
+}
+
+// A Utility function to delete the give node
+BSTNode *PointsBST::deleteNode(BSTNode *root)
+{
+    // node with only one chile or no child
+    if (!root->leftChild)
+    {
+        BSTNode *child = root->rightChild;
+        root = NULL;
+        return child;
+    }
+    else if (!root->rightChild)
+    {
+        BSTNode *child = root->leftChild;
+        root = NULL;
+        return child;
+    }
+
+    // node with two children: get inorder successor
+    // in the right subtree
+    BSTNode *next = leftMost(root->rightChild);
+
+    // copy the inorder successor's content to this node
+    root->value = next->value;
+
+    // delete the inorder successor
+    root->rightChild = deleteNode(root->rightChild);
+
+    return root;
+}
+
+// function to find node in given range and delete
+// it in preorder manner
+void PointsBST::removeRange(int low, int high)
+{
+    if (root == NULL)
+    {
+        cout << "your points BST is empty, so no nodes were discarded" << endl;
+        return;
+    }
+    cout << "the random range is " << low << " to " << high << endl;
+    removeRangeHelper(root, low, high);
+}
+
+BSTNode *PointsBST::removeRangeHelper(BSTNode *node, int low, int high)
+{
+    // First fix the left and right subtrees of node
+    node->leftChild = removeRangeHelper(node->leftChild, low, high);
+    node->rightChild = removeRangeHelper(node->rightChild, low, high);
+
+    // Now fix the node.
+    // if given node is in Range then delete it
+    if (node->value >= low && node->value <= high)
+    {
+        cout << "the node with the value " << node->value << " fell within the range and was discarded" << endl;
+        return deleteNode(node);
+    }
+
+    // Root is out of range
+    return node;
 }

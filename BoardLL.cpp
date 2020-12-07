@@ -40,6 +40,15 @@ void BoardLL::printBoard()
     }
 }
 
+void BoardLL::printPointsBST()
+{
+    points.printInOrderBST();
+}
+void BoardLL::findTotalPoints()
+{
+    points.findTotalPoints();
+}
+
 void BoardLL::buildBoard(int numberOfTiles)
 {
     for (int i = 0; i < numberOfTiles; i++)
@@ -77,8 +86,20 @@ void BoardLL::rollTheDie()
     }
     else if (currentTile->type == "add a point node of a random value")
     {
-        srand(time(NULL));
         randomNumber = rand() % 100 + 1;
         points.addPointNode(randomNumber);
+    }
+    else if (currentTile->type == "discard all point nodes you have that are in a random range of values")
+    {
+        int randomNumber2;
+        randomNumber = rand() % 100 + 1;
+        randomNumber2 = rand() % 100 + 1;
+        if (randomNumber > randomNumber2)
+        {
+            int temp = randomNumber;
+            randomNumber = randomNumber2;
+            randomNumber2 = temp;
+        }
+        points.removeRange(randomNumber, randomNumber2);
     }
 }

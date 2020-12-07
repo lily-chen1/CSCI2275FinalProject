@@ -7,20 +7,23 @@ CSCI 2275
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <time.h>
 #include "BoardLL.h"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
     BoardLL boardGame;
 
     std::string dmenu = "======Main Menu=====\n"
                         "1. Start a new game\n"
                         "2. Roll the die\n"
                         "3. Print board\n"
-
-                        "4. Quit";
+                        "4. Print points BST\n"
+                        "5. Sum all nodes of the points BST and print total points\n"
+                        "6. Quit";
 
     int choice;
     bool exit = false;
@@ -57,6 +60,16 @@ int main(int argc, char *argv[])
             break;
         }
         case 4:
+        {
+            boardGame.printPointsBST();
+            break;
+        }
+        case 5:
+        {
+            boardGame.findTotalPoints();
+            break;
+        }
+        case 6:
         {
             exit = true;
             break;

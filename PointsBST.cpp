@@ -112,7 +112,8 @@ void PointsBST::addPointNode(int value)
 
 /*
 finds the minimum value by going through the left childs until it hits the
-minimum value
+minimum value and then deletes it
+called by rollTheDie() from the BoardLL class as one of the tile type events
 */
 void PointsBST::deleteMinValue()
 {
@@ -152,6 +153,11 @@ void PointsBST::deleteMinValue()
     delete current;
 }
 
+/*
+finds the maximum value by going through the right childs until it hits the
+maximum value and then deletes it
+called by rollTheDie() from the BoardLL class as one of the tile type events
+*/
 void PointsBST::deleteMaxValue()
 {
     struct BSTNode *current = root;
@@ -190,6 +196,10 @@ void PointsBST::deleteMaxValue()
     delete current;
 }
 
+/*
+returns true if the BST is empty
+returns false if it is not
+*/
 bool PointsBST::isEmpty()
 {
     if (root == NULL)
@@ -202,7 +212,9 @@ bool PointsBST::isEmpty()
     }
 }
 
-// A Utility function to find leftMost node
+/*
+a utility function to find left most (minimum value) node 
+*/
 BSTNode *PointsBST::leftMost(BSTNode *root)
 {
     if (!root)

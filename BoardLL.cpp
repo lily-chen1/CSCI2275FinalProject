@@ -15,6 +15,7 @@ BoardLL::BoardLL() {}
 adds a new node to the end of the list
 nothing needs to be passed as input because the 
 tileNode constructor randomly generates the type
+called by rollTheDie() as one of the tile type events
 */
 void BoardLL::addTile()
 {

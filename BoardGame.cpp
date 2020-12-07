@@ -14,6 +14,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+    //seeding the rand() function with the current time
     srand(time(NULL));
     BoardLL boardGame;
 

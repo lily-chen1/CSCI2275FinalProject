@@ -11,6 +11,11 @@ using namespace std;
 PointsBST points;
 BoardLL::BoardLL() {}
 
+/*
+adds a new node to the end of the list
+nothing needs to be passed as input because the 
+tileNode constructor randomly generates the type
+*/
 void BoardLL::addTile()
 {
     tileNode *newTile = new tileNode();
@@ -29,6 +34,10 @@ void BoardLL::addTile()
     newTile->previous = last;
 }
 
+/*
+print out all tile nodes of the board linked list in order
+starting from the head node
+*/
 void BoardLL::printBoard()
 {
     cout << "\nPrinting board..." << endl;
@@ -40,15 +49,30 @@ void BoardLL::printBoard()
     }
 }
 
+/*
+just calls the printInOrderBST() function from the pointsBST class
+because it's inacessible from the driver file
+*/
 void BoardLL::printPointsBST()
 {
     points.printInOrderBST();
 }
+
+/*
+same logic as the function above, this time calling the findTotalPoints() function
+from the points BST class
+*/
 void BoardLL::findTotalPoints()
 {
     points.findTotalPoints();
 }
 
+/*
+generates the board
+it takes the number of tiles that's given as input
+and just uses it in a for loop that calls addTile()
+for the number of tiles given as input
+*/
 void BoardLL::buildBoard(int numberOfTiles)
 {
     for (int i = 0; i < numberOfTiles; i++)
@@ -57,6 +81,16 @@ void BoardLL::buildBoard(int numberOfTiles)
     }
 }
 
+/*
+generates a random number from 1 to 6 to simulate rolling a die
+just like a traditional board game, the number that you roll is the
+number of spaces that you move forward. as in it will get the current 
+tile that the player is on and get that tile node's next for the 
+number of that the player rolled. so for example rolling a 4 and moving 
+4 spaces means you move 4 linked list nodes down. at the end it
+gets the type of the link list node that you land on and it calls functions
+from the pointsBST class based on it
+*/
 void BoardLL::rollTheDie()
 {
     if (currentTile == NULL)

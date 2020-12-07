@@ -7,17 +7,10 @@ PointsBST::PointsBST()
 {
 }
 
-void PointsBST::printValue(int value)
-{
-    int opCount;
-    BSTNode *temp = searchBST(value);
-    cout << "Word: " << temp->value << endl
-         << "Count: " << temp->count << endl
-         << "Parent: " << temp->parent->value << endl
-         << "Left Child: " << temp->leftChild->value << endl
-         << "Right Child: " << temp->rightChild->value << endl;
-}
-
+/*
+uses recursion to print the BST in order from node with the least value
+to the node with the greatest
+*/
 void PointsBST::printInOrderBST()
 {
     if (root == NULL)
@@ -31,6 +24,23 @@ void PointsBST::printInOrderBST()
     return;
 }
 
+/*
+private method called by printInOrderBST() for recursion
+*/
+void PointsBST::printBST(BSTNode *node)
+{
+    if (node != NULL)
+    {
+        printBST(node->leftChild);
+        cout << node->value << " ";
+        printBST(node->rightChild);
+    }
+}
+
+/*
+uses the same recursion from printInOrderBST() to sum up the values of the
+nodes in the BST and find the total points that the player currently has
+*/
 void PointsBST::findTotalPoints()
 {
     int count = 0;
@@ -42,6 +52,25 @@ void PointsBST::findTotalPoints()
          << "you currently have a total of " << count << " points" << endl;
 }
 
+/*
+private method called by findTotalPoints() for recursion
+*/
+void PointsBST::findTotalPointsHelper(BSTNode *node, int *c)
+{
+    *c = *c + node->value;
+    if (node->leftChild != NULL)
+    {
+        findTotalPointsHelper(node->leftChild, c);
+    }
+    if (node->rightChild != NULL)
+    {
+        findTotalPointsHelper(node->rightChild, c);
+    }
+}
+
+/*
+adds a new point node to the points BST
+*/
 void PointsBST::addPointNode(int value)
 {
     int comparisonCount = 0;
@@ -81,113 +110,10 @@ void PointsBST::addPointNode(int value)
     cout << "node with a value of " << value << " was added to the BST" << endl;
 }
 
-void PointsBST::findValueRange(int value1, int value2)
-{
-    if (!root)
-    {
-        return;
-    }
-    BSTNode *temp = root;
-    while (temp)
-    {
-        if (temp->leftChild == NULL)
-        {
-            // check if temp lies between word1 and word2
-            if (temp->value <= value2 &&
-                temp->value >= value1)
-            {
-                cout << temp->value << " ";
-            }
-            temp = temp->rightChild;
-        }
-
-        else
-        {
-            BSTNode *pre = temp->leftChild;
-            while (pre->rightChild != NULL && pre->rightChild != temp)
-            {
-                pre = pre->rightChild;
-            }
-
-            if (pre->rightChild == NULL)
-            {
-                pre->rightChild = temp;
-                temp = temp->leftChild;
-            }
-            else
-            {
-                pre->rightChild = NULL;
-                // check if temp lies between word1 and word2
-                if (temp->value <= value2 && temp->value >= value1)
-                {
-                    cout << temp->value << " ";
-                }
-                temp = temp->rightChild;
-            }
-        }
-    }
-    cout << endl;
-}
-
-void PointsBST::printBST(BSTNode *node)
-{
-    if (node != NULL)
-    {
-        printBST(node->leftChild);
-        cout << node->value << " ";
-        printBST(node->rightChild);
-    }
-}
-
-void PointsBST::findTotalPointsHelper(BSTNode *node, int *c)
-{
-    *c = *c + node->value;
-    if (node->leftChild != NULL)
-    {
-        findTotalPointsHelper(node->leftChild, c);
-    }
-    if (node->rightChild != NULL)
-    {
-        findTotalPointsHelper(node->rightChild, c);
-    }
-}
-
-BSTNode *PointsBST::searchBST(int value)
-{
-    if (root == NULL)
-    {
-        return NULL;
-    }
-    BSTNode *finder = root;
-
-    while (finder->value != value && finder != NULL)
-    {
-        if (value < finder->value)
-        {
-            if (finder->leftChild != NULL)
-            {
-                finder = finder->leftChild;
-            }
-            else
-            {
-                return NULL;
-            }
-        }
-        else if (value > finder->value)
-        {
-            if (finder->rightChild != NULL)
-            {
-                finder = finder->rightChild;
-            }
-            else
-            {
-                return NULL;
-            }
-        }
-    }
-    return finder;
-}
-
+/*
+finds the minimum value by going through the left childs until it hits the
+minimum value
+*/
 void PointsBST::deleteMinValue()
 {
     struct BSTNode *current = root;

@@ -6,7 +6,6 @@
 struct BSTNode
 {
     int value;
-    int count;
     BSTNode *parent;
     BSTNode *leftChild;
     BSTNode *rightChild;
@@ -14,7 +13,6 @@ struct BSTNode
     BSTNode(int in_value, BSTNode *p, BSTNode *lc, BSTNode *rc)
     {
         value = in_value;
-        count = 1;
         parent = p;
         leftChild = lc;
         rightChild = rc;
@@ -28,6 +26,7 @@ public:
     PointsBST();
     void printInOrderBST();
     void findTotalPoints();
+    void deleteTree();
     void addPointNode(int value);
     void deleteMinValue();
     void deleteMaxValue();
@@ -40,6 +39,7 @@ protected:
 private:
     void printBST(BSTNode *node);
     void findTotalPointsHelper(BSTNode *node, int *c);
+    void deleteTreeHelper(BSTNode *node);
     BSTNode *removeRangeHelper(BSTNode *node, int low, int high);
 
     BSTNode *root = NULL;

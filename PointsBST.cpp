@@ -68,6 +68,36 @@ void PointsBST::findTotalPointsHelper(BSTNode *node, int *c)
 }
 
 /*
+function called whenever a new game starts and a new board is generated
+deletes the current points tree using recursion
+*/
+void PointsBST::deleteTree()
+{
+    if (root == NULL)
+        return;
+
+    deleteTreeHelper(root);
+    root = NULL;
+}
+
+/*
+private method called by deleteTree() for recursion
+*/
+void PointsBST::deleteTreeHelper(BSTNode *node)
+{
+    if (node == NULL)
+        return;
+
+    /* first delete both subtrees */
+    deleteTreeHelper(node->leftChild);
+    deleteTreeHelper(node->rightChild);
+
+    /* then delete the node */
+    cout << "Deleting node: " << node->value << endl;
+    delete node;
+}
+
+/*
 adds a new point node to the points BST
 */
 void PointsBST::addPointNode(int value)

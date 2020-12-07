@@ -76,10 +76,13 @@ for the number of tiles given as input
 */
 void BoardLL::buildBoard(int numberOfTiles)
 {
+    cout << "generating a new board, the current points BST will be deleted" << endl;
+    points.deleteTree();
     for (int i = 0; i < numberOfTiles; i++)
     {
         addTile();
     }
+    cout << "a new board with " << numberOfTiles << " has been generated" << endl;
 }
 
 /*

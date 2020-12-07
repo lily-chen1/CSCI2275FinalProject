@@ -286,34 +286,39 @@ BSTNode *PointsBST::leftMost(BSTNode *root)
     return root;
 }
 
-// A Utility function to delete the give node
-BSTNode *PointsBST::deleteNode(BSTNode *root)
+/* 
+a recursive utility function to delete the give node used by removeRange()
+note that I did not call this function in deleteMinValue() and
+deleteMaxValue() because I though it would be overkill
+and I want to be at least somewhat performant.
+*/
+BSTNode *PointsBST::deleteNode(BSTNode *node)
 {
     // node with only one chile or no child
-    if (!root->leftChild)
+    if (!node->leftChild)
     {
-        BSTNode *child = root->rightChild;
-        root = NULL;
+        BSTNode *child = node->rightChild;
+        node = NULL;
         return child;
     }
-    else if (!root->rightChild)
+    else if (!node->rightChild)
     {
-        BSTNode *child = root->leftChild;
-        root = NULL;
+        BSTNode *child = node->leftChild;
+        node = NULL;
         return child;
     }
 
     // node with two children: get inorder successor
     // in the right subtree
-    BSTNode *next = leftMost(root->rightChild);
+    BSTNode *next = leftMost(node->rightChild);
 
     // copy the inorder successor's content to this node
-    root->value = next->value;
+    node->value = next->value;
 
     // delete the inorder successor
-    root->rightChild = deleteNode(root->rightChild);
+    node->rightChild = deleteNode(node->rightChild);
 
-    return root;
+    return node;
 }
 
 // function to find node in given range and delete
@@ -331,6 +336,9 @@ void PointsBST::removeRange(int low, int high)
 
 BSTNode *PointsBST::removeRangeHelper(BSTNode *node, int low, int high)
 {
+    if (!node)
+        return NULL;
+
     // First fix the left and right subtrees of node
     node->leftChild = removeRangeHelper(node->leftChild, low, high);
     node->rightChild = removeRangeHelper(node->rightChild, low, high);

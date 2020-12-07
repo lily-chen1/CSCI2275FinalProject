@@ -202,6 +202,7 @@ void PointsBST::deleteMinValue()
         current = current->leftChild;
     }
     cout << "the minimum value node in the points BST with a value of " << current->value << " was discarded" << endl;
+
     delete current;
 }
 

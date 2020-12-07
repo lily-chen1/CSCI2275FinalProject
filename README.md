@@ -2,7 +2,7 @@
 
 **Project Summary**
 
-This program is a terminal based board game where the player rolls a dice and either gets or loses points based on which tile they landed on.
+This program is a terminal based board game where the player rolls a dice and either gets or loses points based on which tile they landed on. The program contains two classes, which each use a linked list and a binary search tree respectively. The class BoardLL uses a linked list to represent the game board that is made up of nodes/tiles. The class PointsBST uses a binary search tree to keep track of and manipulate the player score.
 
 **How to Run**
 

@@ -48,8 +48,7 @@ void PointsBST::findTotalPoints()
     {
         findTotalPointsHelper(root, &count);
     }
-    cout << endl
-         << "you currently have a total of " << count << " points" << endl;
+    cout << "you currently have a total of " << count << " points" << endl;
 }
 
 /*

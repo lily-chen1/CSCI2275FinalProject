@@ -94,6 +94,12 @@ from the pointsBST class based on it
 */
 void BoardLL::rollTheDie()
 {
+    if (firstTile == NULL)
+    {
+        cout << "please generate a new board first using the start a new game option" << endl;
+        return;
+    }
+
     if (currentTile == NULL)
     {
         currentTile = firstTile;
@@ -107,6 +113,7 @@ void BoardLL::rollTheDie()
         {
             cout << "you have reached the end of the board" << endl;
             points.findTotalPoints();
+            cout << "if you would like to play again, generate a new board using the start a new game option" << endl;
             return;
         }
         currentTile = currentTile->next;
